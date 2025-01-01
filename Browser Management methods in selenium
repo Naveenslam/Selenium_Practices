@@ -1,0 +1,117 @@
+package com.packages.day1;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class SeleniumMethodsPart1 {
+
+	public static void main(String[] args) throws InterruptedException {
+
+		// Webdrivermanager for setup browser drivers
+
+		WebDriverManager.chromedriver().setup();
+
+		// Chrome browser using the ChromeDriver, enabling Selenium to interact with it
+		// for automation purposes.
+
+		ChromeDriver driver = new ChromeDriver();
+
+		// driver.get("https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager/5.8.0");
+
+		// Opens the specified URL in the browser
+
+		driver.get("http://leaftaps.com/opentaps/control/main");
+
+		// driver.manage().window().maximize(); used for maximize the window in your
+		// browser
+
+		driver.manage().window().maximize();
+
+//		 WebElement usernames= driver.findElement(By.id("username"));
+
+//		 WebElement usernames=driver.findElement(By.xpath("/html/body/div/div/div/form/p/input"));
+
+//		 WebElement usernames=driver.findElement(By.xpath("//p//input"));
+
+		// Locate the username field using XPath and assign it to a WebElement
+
+		WebElement usernames = driver.findElement(By.xpath("//label[@for='username']/following::input[1]"));
+
+		// Enters the text "Demosalesmanager" into the username field
+
+		usernames.sendKeys("Demosalesmanager");
+
+		// Locate the password field using its ID and enter "crmsfa"
+
+		driver.findElement(By.id("password")).sendKeys("crmsfa");
+
+		// Click the login button using its class name
+
+		driver.findElement(By.className("decorativeSubmit")).click();
+
+		// Print the title of the first page after login
+
+		System.out.println("first page title :: " + driver.getTitle());
+
+		// Print the URL of the first page after login
+
+		System.out.println("first page URL :: " + driver.getCurrentUrl());
+
+		driver.findElement(By.linkText("CRM/SFA")).click();
+
+		// Navigate to the Create Lead page using the link text
+
+		driver.findElement(By.linkText("Create Lead")).click();
+
+		WebElement selectClass = driver.findElement(By.id("createLeadForm_dataSourceId"));
+
+//		selectClass.sendKeys("Direct Mail");
+
+		// Create a Select object for the dropdown menu
+
+		Select se = new Select(selectClass);
+
+//		se.selectByIndex(4);
+//		
+//		se.selectByValue("LEAD_EXISTCUST");
+
+		// Select the option "Cold Call" from the dropdown by its visible text
+
+		se.selectByVisibleText("Cold Call");
+
+		// Print the current session ID (unique for the browser instance)
+
+		System.out.println("session id is : " + driver.getSessionId());
+
+		// Locate the marketing campaign dropdown by its name and select "Automobile"
+
+		WebElement marketvalue = driver.findElement(By.name("marketingCampaignId"));
+
+		marketvalue.sendKeys("Automobile");
+
+		// Locate the industry dropdown using an XPath expression and select "Computer
+		// Software"
+
+		WebElement industrySelect = driver.findElement(By.xpath("//span[contains(text(), 'Indust')]/following::select[1]"));
+
+		industrySelect.sendKeys("Computer Software");
+
+		// Print the URL of the current page
+
+		System.out.println("current page URL :: " + driver.getCurrentUrl());
+
+		// Refresh the current page
+
+		driver.navigate().refresh();
+
+		// Quit the browser, closing all associated windows and ending the session
+
+		driver.quit();
+
+	}
+
+}
